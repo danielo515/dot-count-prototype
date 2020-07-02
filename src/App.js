@@ -8,6 +8,7 @@ import ZoomOutIcon from "@material-ui/icons/ZoomOut";
 import UndoIcon from "@material-ui/icons/Undo";
 import { useImage } from "./useImage";
 import LoadImage from "./LoadImage";
+import BrushSelector from "./BrushSelector";
 
 const pointId = p => `${p.x},${p.y}`;
 // Creates a new array with the item at idx removed
@@ -57,12 +58,12 @@ export default function App() {
     <div className="App">
       <div className="controls">
         <div className="row">
-          <button type="button" onClick={() => setSize(size => size + 1)}>
-            +
-          </button>
-          <button type="button" onClick={() => setSize(size => size - 1)}>
-            -
-          </button>
+          <BrushSelector
+            size={size}
+            onChange={setColor}
+            setSize={setSize}
+            color={color}
+          />
           <button type="button" onClick={scaleDown}>
             <ZoomOutIcon />
           </button>
@@ -79,14 +80,6 @@ export default function App() {
         <button type="button" onClick={() => setPoints([])}>
           clear
         </button>
-
-        <label>
-          <input
-            type="color"
-            value={color}
-            onChange={e => setColor(e.currentTarget.value)}
-          />
-        </label>
       </div>
       <div className="info">
         <h2>Items: {points.length}</h2>

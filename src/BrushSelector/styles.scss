@@ -1,0 +1,16 @@
+.hasMenu {
+  position: relative;
+  button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    span {
+      border-radius: 100%;
+    }
+  }
+}
+.menu {
+  position: absolute;
+  top:-80px;
+}
