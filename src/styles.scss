@@ -1,0 +1,106 @@
+$main-background: #cecece;
+* {
+  box-sizing: border-box;
+}
+.App {
+  font-family: sans-serif;
+  text-align: center;
+}
+body {
+  margin: 0;
+  padding: 0;
+  background-color: $main-background;
+}
+canvas {
+  border: 1px solid grey;
+}
+
+#root, body {
+  height: 100vh;
+  width: 100%;
+}
+
+h2 {
+  color: paleturquoise;
+  padding: 0 8px;
+  margin: 0;
+}
+
+.info {
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  right: 0;
+  margin: 0;
+  padding: 8px;
+  ul {
+    padding: 0;
+    margin: 0;
+    // temporary
+    display: none;
+  }
+}
+
+$btn-border: #3d3d3d;
+$btn-background: #a0fadc;
+$btn-color: #eaefff;
+$text-button: 500 14px/24px Inter;
+$dark-bg: #333333;
+
+.controls {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  padding: 0 8px;
+  justify-content: center;
+  background-color: $dark-bg;
+  z-index: 1;
+  button, label {
+    border: none;
+    font: $text-button;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: inset 0 0 0 1px $btn-border;
+    padding: 8px;
+    color: $btn-color;
+    background-color: $dark-bg;
+    text-transform: uppercase;
+    min-width: 40px;
+    &:disabled {
+      color: grey;
+      background-color: darken($color: $btn-background, $amount: 5)
+    }
+  }
+  label {
+    cursor: pointer;
+  }
+
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  button {
+    flex: 1;
+  }
+}
+
+ul {
+  list-style-type: none;
+  text-align: left;
+  max-height: 300px;
+  overflow-y: scroll;
+  color: whitesmoke;
+  background-color: transparent;
+}
+
+@media (max-width: 460px) {
+  ul {
+    display: none;
+  }
+}
