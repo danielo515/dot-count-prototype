@@ -10,8 +10,8 @@ export default function BrushSelector({ color, onChange, setSize, size }) {
       <button onClick={toggle}>
         <span
           style={{
-            height: `${size}px`,
-            width: `${size}px`,
+            height: `${size * 2}px`,
+            width: `${size * 2}px`,
             backgroundColor: color
           }}
         />
