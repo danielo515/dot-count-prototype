@@ -46,6 +46,9 @@ $btn-background: #a0fadc;
 $btn-color: #eaefff;
 $text-button: 500 14px/24px Inter;
 $dark-bg: #333333;
+$disabled-bg: #68666650;
+$btn-color-disabled: #cecece41;
+
 
 .controls {
   display: flex;
@@ -71,8 +74,11 @@ $dark-bg: #333333;
     text-transform: uppercase;
     min-width: 40px;
     &:disabled {
-      color: grey;
-      background-color: darken($color: $btn-background, $amount: 5)
+      color: $btn-color-disabled;
+      background-color: $disabled-bg;
+    }
+    &:focus {
+      outline: unset;
     }
   }
   label {
