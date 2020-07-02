@@ -67,7 +67,7 @@ export default function App() {
           <button type="button" onClick={scaleDown}>
             <ZoomOutIcon />
           </button>
-          <button type="button" onClick={resetZoom}>
+          <button type="button" disabled={scale === 1} onClick={resetZoom}>
             <ResetZoom />
           </button>
           <button type="button" onClick={scaleUp}>
