@@ -1,0 +1,27 @@
+.wrapper {
+  position: relative;
+  button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    span {
+      border-radius: 100%;
+    }
+  }
+  input[type="color"] {
+    display: none;
+  }
+  label {
+    span {
+      height: 20px;
+      width: 50%;
+    }
+  }
+}
+.menu {
+  position: absolute;
+  bottom: 100%;
+  margin-top: 1px;
+  border-bottom: 1px solid transparent;
+}
