@@ -27,6 +27,7 @@ export default function BrushSelector({ color, onChange, setSize, size }) {
             </button>
           </div>
           <label>
+            <span style={{ backgroundColor: color }} />
             <input
               type="color"
               value={color}

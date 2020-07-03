@@ -9,8 +9,19 @@
       border-radius: 100%;
     }
   }
+  input[type="color"] {
+    display: none;
+  }
+  label {
+    span {
+      height: 20px;
+      width: 50%;
+    }
+  }
 }
 .menu {
   position: absolute;
-  top:-80px;
+  bottom: 100%;
+  margin-top: 1px;
+  border-bottom: 1px solid transparent;
 }
