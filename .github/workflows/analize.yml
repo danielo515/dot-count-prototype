@@ -32,7 +32,7 @@ jobs:
         exec: |
           cd itemcounter && \
            cordova platform add android && \
-           cordova build --no-telemetry && \
+           cordova build --no-telemetry --release && \
            cp "$(find . -name '*.apk')" ../
     - name: Upload artifacts 
       uses: actions/upload-artifact@v2
