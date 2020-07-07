@@ -26,7 +26,6 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - run: yarn
     - run: yarn build
-    - run: yarn inspectBundle
     - name: Setup Cordova
       uses: oxr463/setup-cordova@0.0.2
       with:
