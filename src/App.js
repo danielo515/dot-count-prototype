@@ -1,7 +1,6 @@
 import React, { useRef, useState } from "react";
 import "./styles.scss";
 import "normalize.css";
-import Konva from "konva";
 import { Stage, Layer, Circle, Image } from "react-konva";
 import ResetZoom from "@material-ui/icons/YoutubeSearchedFor";
 import ZoomInIcon from "@material-ui/icons/ZoomIn";
