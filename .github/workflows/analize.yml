@@ -34,7 +34,6 @@ jobs:
            cordova platform add android && \
            cordova build --no-telemetry && \
            cp "$(find . -name '*.apk')" .
-          - name: Archive production artifacts
     - name: Upload artifacts 
       uses: actions/upload-artifact@v2
       with:
