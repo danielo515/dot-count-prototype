@@ -1,5 +1,5 @@
 import React from "react";
-import camera from "../../public/camera.png";
+import camera from "./camera.png";
 import css from "./LoadImage.module.scss";
 
 export default function LoadImage({ onFileSelected }) {
@@ -10,7 +10,7 @@ export default function LoadImage({ onFileSelected }) {
         <input
           name="image"
           type="file"
-          accept="image/x-png,image/gif,image/jpeg"
+          capture="camera" accept="image/*"
           onChange={onFileSelected}
         />
         <div>Load picture</div>
