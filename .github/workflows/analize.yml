@@ -30,7 +30,6 @@ jobs:
     - name: Setup Cordova
       uses: oxr463/setup-cordova@0.0.2
       with:
-        # Apache Cordova command to execute
         exec: |
           cd itemcounter && \
            cordova platform add android && \
