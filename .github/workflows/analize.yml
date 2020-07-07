@@ -27,3 +27,13 @@ jobs:
     - run: yarn
     - run: yarn build
     - run: yarn inspectBundle
+    - name: Setup Cordova
+      uses: oxr463/setup-cordova@0.0.2
+      with:
+        # Apache Cordova command to execute
+        exec: |
+          cd itemcounter && \
+           cordova platform add android && \
+           cordova build --no-telemetry && \
+           cp "$(find . -name '*.apk')" .
+
