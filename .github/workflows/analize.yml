@@ -41,7 +41,10 @@ jobs:
         uses: oxr463/setup-cordova@0.0.2
         with:
           exec: |
-            jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore ./ANDROID_SIGN_KEY ./*.apk dotcounter -storepass $KEY_PASS
+            jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 \
+            -keystore ./ANDROID_SIGN_KEY \
+            ./*.apk ANDROID_KEY \
+            --storepass $KEY_PASS
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
         with:
