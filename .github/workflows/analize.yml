@@ -33,11 +33,11 @@ jobs:
             cordova platform add android && \
             cordova build --no-telemetry --release && \
             (cd ./platforms/android && ./gradlew app:bundleRelease) && \
-            cp "$(find . -name '*.aab')" ../
+            cp "$(find . -name '*.aab')" ./
       - name: Sign app
         uses: r0adkll/sign-android-release@v1
         with:
-          releaseDirectory: ./
+          releaseDirectory: ./itemcounter
           signingKeyBase64: ${{ secrets.ANDROID_SIGN_KEY }}
           alias: ${{ secrets.ALIAS }}
           keyStorePassword: ${{ secrets. KEY_PASS }}
@@ -45,4 +45,5 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: dotcounter
+          # Be careful, the name of the sign app task matters!
           path: ${{ steps.sign-app.outputs.signedReleaseFile }}
