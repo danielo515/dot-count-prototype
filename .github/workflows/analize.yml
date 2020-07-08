@@ -43,7 +43,7 @@ jobs:
           exec: |
             jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 \
             -keystore ./ANDROID_SIGN_KEY \
-            ./*.apk ANDROID_KEY \
+            "./$(ls *.apk)" ANDROID_KEY \
             --storepass $KEY_PASS
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
