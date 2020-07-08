@@ -34,18 +34,13 @@ jobs:
             cordova build --no-telemetry --release && \
             (cd ./platforms/android && ./gradlew app:bundleRelease) && \
             cp "$(find . -name '*.aab')" ../
-      - name: Extract certificate
-        env:
-          AUTH: ${{ secrets.ANDROID_SIGN_KEY }}
-        run: echo "$AUTH" | base64 --decode > ANDROID_SIGN_KEY && pwd && ls -l
-      # - name: Sign app
-      #   uses: oxr463/setup-cordova@0.0.2
-      #   with:
-      #     exec: |
-      #       jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 \
-      #       -keystore ./ANDROID_SIGN_KEY \
-      #       "./$(ls *.apk)" ANDROID_KEY \
-      #       --storepass $KEY_PASS
+      - name: Sign app
+        uses: r0adkll/sign-android-release@v1
+        with:
+          releaseDirectory: ./
+          signingKeyBase64: ${{ secrets.ANDROID_SIGN_KEY }}
+          alias: ${{ secrets.ALIAS }}
+          keyStorePassword: ${{ secrets. KEY_PASS }}
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
         with:
