@@ -5,13 +5,12 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     strategy:
@@ -19,24 +18,32 @@ jobs:
         node-version: [12.x]
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
-    - run: yarn
-    - run: yarn build
-    - name: Setup Cordova
-      uses: oxr463/setup-cordova@0.0.2
-      with:
-        exec: |
-          cd itemcounter && \
-           cordova platform add android && \
-           cordova build --no-telemetry --release && \
-           cp "$(find . -name '*.apk')" ../
-    - name: Upload artifacts 
-      uses: actions/upload-artifact@v2
-      with:
-         name: apk
-         path: ./*.apk
-
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: yarn
+      - run: yarn build
+      - name: Build app
+        uses: oxr463/setup-cordova@0.0.2
+        with:
+          exec: |
+            cd itemcounter && \
+            cordova platform add android && \
+            cordova build --no-telemetry --release && \
+            cp "$(find . -name '*.apk')" ../
+      - name: Extract certificate
+        env:
+          AUTH: ${{ secrets.ANDROID_SIGN_KEY }}
+        run: echo "$AUTH" | base64 --decode > ANDROID_SIGN_KEY && pwd && ls -l
+      - name: Sign app
+        uses: oxr463/setup-cordova@0.0.2
+        with:
+          exec: |
+            jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore ./ANDROID_SIGN_KEY ./*.apk dotcounter -storepass $KEY_PASS
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: dotcounter
+          path: ./*.apk
