@@ -23,27 +23,49 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - run: yarn
-      - run: yarn build
+      - name: Build web app
+        run: yarn && yarn build
+      - name: Extract certificate
+        env:
+          AUTH: ${{ secrets.ANDROID_SIGN_KEY }}
+        run: echo "$AUTH" | base64 --decode > ANDROID_SIGN_KEY && pwd && ls -l
       - name: Build android app
         uses: oxr463/setup-cordova@0.0.2
         with:
           exec: |
             cd itemcounter && \
             cordova platform add android && \
-            cordova build --no-telemetry --release && \
-            (cd ./platforms/android && ./gradlew app:bundleRelease) && \
-            cp "$(find . -name '*.aab')" ./
-      - name: Sign app
-        uses: r0adkll/sign-android-release@v1
-        with:
-          releaseDirectory: itemcounter/
-          signingKeyBase64: ${{ secrets.ANDROID_SIGN_KEY }}
-          alias: ${{ secrets.ALIAS }}
-          keyStorePassword: ${{ secrets. KEY_PASS }}
-      - name: Upload artifacts
+            cordova build android --no-telemetry --release -- --keystore=../ANDROID_SIGN_KEY --storePassword=$KEY_PASS --alias=$ALIAS --password=$KEY_PASS && \
+            (cd ./platforms/android && ./gradlew app:bundleRelease)
+      # cp "$(find . -name '*.aab')" ./
+      - name: Upload apk artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: dotcounter
-          # Be careful, the name of the sign app task matters!
-          path: ${{ steps.sign-app.outputs.signedReleaseFile }}
+          name: apks
+          path: ./**/*.apk
+      - name: Upload aab artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: bundled
+          path: ./**/*.aab
+      # - name: Sign app
+      #   uses: oxr463/setup-cordova@0.0.2
+      #   with:
+      #     exec: |
+      #       jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 \
+      #       -keystore ./ANDROID_SIGN_KEY \
+      #       "./$(ls *.apk)" ANDROID_KEY \
+      #       --storepass $KEY_PASS
+      # - name: Sign app
+      #   uses: r0adkll/sign-android-release@v1
+      #   with:
+      #     releaseDirectory: ./itemcounter
+      #     signingKeyBase64: ${{ secrets.ANDROID_SIGN_KEY }}
+      #     alias: ${{ secrets.ALIAS }}
+      #     keyStorePassword: ${{ secrets. KEY_PASS }}
+      # - name: Upload artifacts
+      #   uses: actions/upload-artifact@v2
+      #   with:
+      #     name: dotcounter
+      #     # Be careful, the name of the sign app task matters!
+      #     path: ${{ steps.sign-app.outputs.signedReleaseFile }}

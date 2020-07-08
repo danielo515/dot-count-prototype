@@ -115,3 +115,9 @@ build
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+itemcounter/ANDROID_SIGN_KEY
+itemcounter/app.aab
+itemcounter/*.apk
+itemcounter/.gradle/4.10.3/gc.properties
+itemcounter/.gradle/4.10.3/fileChanges/last-build.bin
+itemcounter/.gradle/4.10.3/fileHashes/fileHashes.lock
