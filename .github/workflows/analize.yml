@@ -37,7 +37,7 @@ jobs:
             cordova platform add android && \
             cordova build android --no-telemetry --release -- --keystore=../ANDROID_SIGN_KEY --storePassword=$KEY_PASS --alias=$ALIAS --password=$KEY_PASS && \
             (cd ./platforms/android && ./gradlew app:bundleRelease) && \
-            find . -name '*.aab' -or -name '*.apk' | xargs cp -t ./
+            find . -name '*.aab' -or -name '*.apk' | xargs cp '{}' ./
       - name: Upload apk artifacts
         uses: actions/upload-artifact@v2
         with:
