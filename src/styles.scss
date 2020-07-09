@@ -44,10 +44,11 @@ h2 {
 $btn-border: #3d3d3d;
 $btn-background: #a0fadc;
 $btn-color: #eaefff;
-$text-button: 500 14px/24px Inter;
+$text-button: 500 16px/24px Inter;
 $dark-bg: #333333;
 $disabled-bg: #68666650;
 $btn-color-disabled: #cecece41;
+$btn-padding: 8px;
 
 
 .controls {
@@ -68,7 +69,7 @@ $btn-color-disabled: #cecece41;
     justify-content: center;
     align-items: center;
     box-shadow: inset 0 0 0 1px $btn-border;
-    padding: 8px;
+    padding: $btn-padding;
     color: $btn-color;
     background-color: $dark-bg;
     text-transform: uppercase;
