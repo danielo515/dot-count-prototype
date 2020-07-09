@@ -10,7 +10,7 @@ import { useImage } from "./useImage";
 import LoadImage from "./LoadImage";
 import BrushSelector from "./BrushSelector";
 
-const pointId = p => `${p.x},${p.y}`;
+const pointId = (p) => `${p.x},${p.y}`;
 // Creates a new array with the item at idx removed
 const removePos = (idx, arr) => [...arr.slice(0, idx), ...arr.slice(idx + 1)];
 // this function will return pointer position relative to the passed node
@@ -32,24 +32,27 @@ export default function App() {
   const [size, setSize] = useState(2);
   const [color, setColor] = useState("#a7e326");
   const [scale, setScale] = useState(1);
-  const scaleUp = () => setScale(scale => scale + 0.1);
-  const scaleDown = () => setScale(scale => scale - 0.1);
-  const resetZoom = () => setScale(1);
+  const scaleUp = () => setScale((scale) => scale + 0.1);
+  const scaleDown = () => setScale((scale) => scale - 0.1);
+  const resetZoom = () => {
+    ref.current.position({ x: 0, y: 0 });
+    setScale(1);
+  };
   const undo = () => setPoints(points.slice(0, -1));
   const [canvasWidth, canvasHeight] = [
     window.innerWidth,
-    window.innerHeight - 16
+    window.innerHeight - 16,
   ];
   const { imageInfo, onFileSelected, image } = useImage({
     width: canvasWidth,
-    height: canvasHeight
+    height: canvasHeight,
   });
 
   console.log({ imageInfo, canvasWidth, canvasHeight });
 
-  const addPoint = e => {
+  const addPoint = (e) => {
     const pos = getRelativePointerPosition(e.currentTarget);
-    setPoints(state => [...state, { x: pos.x, y: pos.y }]);
+    setPoints((state) => [...state, { x: pos.x, y: pos.y }]);
   };
   if (imageInfo.loaded === false) {
     return <LoadImage onFileSelected={onFileSelected} />;
@@ -84,15 +87,15 @@ export default function App() {
       <div className="info">
         <h2>Items: {points.length}</h2>
         <ul>
-          {points.map(p => (
+          {points.map((p) => (
             <li key={pointId(p)}>
               x: {p.x},y: {p.y}
             </li>
           ))}
         </ul>
       </div>
-      <Stage draggable width={canvasWidth} height={canvasHeight}>
-        <Layer ref={layerRef} scaleX={scale} scaleY={scale}>
+      <Stage ref={layerRef} draggable width={canvasWidth} height={canvasHeight}>
+        <Layer scaleX={scale} scaleY={scale}>
           {imageInfo.loaded && (
             <Image
               image={image}
@@ -109,7 +112,7 @@ export default function App() {
               y={p.y}
               fill={color}
               radius={size}
-              onClick={() => setPoints(points => removePos(idx, points))}
+              onClick={() => setPoints((points) => removePos(idx, points))}
             />
           ))}
         </Layer>
@@ -117,3 +120,4 @@ export default function App() {
     </div>
   );
 }
+
