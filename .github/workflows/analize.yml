@@ -52,7 +52,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: bundled
-          path: ./*.aab
+          path: ./**/*.aab
       # - name: Sign app
       #   uses: oxr463/setup-cordova@0.0.2
       #   with:
