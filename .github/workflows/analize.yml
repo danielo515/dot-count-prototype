@@ -36,10 +36,11 @@ jobs:
             cd itemcounter && \
             cordova platform add android && \
             cordova build android --no-telemetry && \
-            cordova build android --no-telemetry --release -- --packageType=bundle --keystore=../ANDROID_SIGN_KEY --storePassword=$KEY_PASS --alias=$ALIAS --password=$KEY_PASS && \
+            cordova build android --no-telemetry --release -- --packageType=bundle --keystore="../ANDROID_SIGN_KEY" --storePassword=${{ secrets.KEY_PASS }} --alias=${{ secrets.ALIAS }} --password=${{  secrets.KEY_PASS }} && \
             (cd ./platforms/android && ./gradlew app:bundleRelease)
       - name: Move built artifacts to root
         run: |
+          sudo chown -R $USER:$USER ./itemcounter
           find . -name '*.aab' -or -name '*.apk' -exec cp '{}' ./ \;
           ls -l
       - name: Upload apk artifacts
