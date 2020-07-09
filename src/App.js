@@ -9,6 +9,7 @@ import UndoIcon from "@material-ui/icons/Undo";
 import { useImage } from "./useImage";
 import LoadImage from "./LoadImage";
 import BrushSelector from "./BrushSelector";
+import TopBar from './TopBar'
 
 const pointId = (p) => `${p.x},${p.y}`;
 // Creates a new array with the item at idx removed
@@ -84,16 +85,7 @@ export default function App() {
           clear
         </button>
       </div>
-      <div className="info">
-        <h2>Items: {points.length}</h2>
-        <ul>
-          {points.map((p) => (
-            <li key={pointId(p)}>
-              x: {p.x},y: {p.y}
-            </li>
-          ))}
-        </ul>
-      </div>
+      <TopBar count={points.length} />
       <Stage ref={layerRef} draggable width={canvasWidth} height={canvasHeight}>
         <Layer scaleX={scale} scaleY={scale}>
           {imageInfo.loaded && (
