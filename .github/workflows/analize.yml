@@ -35,9 +35,13 @@ jobs:
           exec: |
             cd itemcounter && \
             cordova platform add android && \
-            cordova build android --no-telemetry --release -- --keystore=../ANDROID_SIGN_KEY --storePassword=$KEY_PASS --alias=$ALIAS --password=$KEY_PASS && \
-            (cd ./platforms/android && ./gradlew app:bundleRelease) && \
-            find . -name '*.aab' -or -name '*.apk' -exec cp '{}' ../ \;
+            crodova build android --no-telemetry && \
+            cordova build android --no-telemetry --release -- --packageType=bundle --keystore=../ANDROID_SIGN_KEY --storePassword=$KEY_PASS --alias=$ALIAS --password=$KEY_PASS && \
+            (cd ./platforms/android && ./gradlew app:bundleRelease)
+      - name: Move built artifacts to root
+        run: |
+          find . -name '*.aab' -or -name '*.apk' -exec cp '{}' ./ \;
+          ls -l
       - name: Upload apk artifacts
         uses: actions/upload-artifact@v2
         with:
