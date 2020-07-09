@@ -42,6 +42,7 @@ jobs:
         run: |
           sudo chown -R $USER:$USER ./itemcounter
           find . -name '*.aab' -or -name '*.apk' -exec cp '{}' ./ \;
+          find . -name '*.aab' -or -name '*.apk' -exec echo '{}' \;
           ls -l
       - name: Upload apk artifacts
         uses: actions/upload-artifact@v2
