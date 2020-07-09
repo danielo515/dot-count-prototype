@@ -35,7 +35,7 @@ export default function App() {
   const scaleUp = () => setScale((scale) => scale + 0.1);
   const scaleDown = () => setScale((scale) => scale - 0.1);
   const resetZoom = () => {
-    ref.current.position({ x: 0, y: 0 });
+    layerRef.current.position({ x: 0, y: 0 });
     setScale(1);
   };
   const undo = () => setPoints(points.slice(0, -1));
