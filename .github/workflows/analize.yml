@@ -56,8 +56,6 @@ jobs:
           path: ./*.aab
       - name: Send generated debug apk
         uses: appleboy/telegram-action@master
-        env: 
-          APK: $APK
         with:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
