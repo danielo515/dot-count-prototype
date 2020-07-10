@@ -41,7 +41,7 @@ jobs:
       - name: Move built artifacts to root
         run: |
           sudo chown -R $USER:$USER ./itemcounter
-          find . \( -name '*.aab' -o -name '*.apk' \) -exec cp '{}' ./ +
+          find . \( -name '*.aab' -o -name '*.apk' \) -exec cp '{}' ./ \;
           ls -l
           echo "::set-env name=APK::(ls *.apk)"
       - name: Upload apk artifacts
