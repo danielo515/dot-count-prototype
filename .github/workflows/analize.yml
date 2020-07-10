@@ -76,9 +76,3 @@ jobs:
       #     signingKeyBase64: ${{ secrets.ANDROID_SIGN_KEY }}
       #     alias: ${{ secrets.ALIAS }}
       #     keyStorePassword: ${{ secrets. KEY_PASS }}
-      # - name: Upload artifacts
-      #   uses: actions/upload-artifact@v2
-      #   with:
-      #     name: dotcounter
-      #     # Be careful, the name of the sign app task matters!
-      #     path: ${{ steps.sign-app.outputs.signedReleaseFile }}
