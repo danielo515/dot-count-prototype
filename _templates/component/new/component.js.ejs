@@ -1,9 +1,9 @@
 ---
-to: src/components/<%= Name %>/<%= Name %>.ts
+to: src/components/<%= Name %>/<%= Name %>.tsx
 ---
 //@flow
-import React, { type Node } from 'react'
-import styles from './<%= Name %>.scss'
+import React from 'react'
+import styles from './<%= Name %>.module.scss'
 
 type Props = {
   /**
@@ -12,7 +12,7 @@ type Props = {
    * giving it the greatest precedence
    */
   className?: string,
-  children: Node,
+  children: JSX.Element,
   disabled: boolean,
 }
 
