@@ -17,6 +17,7 @@
     "webpack-bundle-analyzer": "3.8.0"
   },
   "devDependencies": {
+    "hygen": "^6.0.4",
     "typescript": "3.8.3"
   },
   "scripts": {
