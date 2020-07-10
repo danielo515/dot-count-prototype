@@ -1,12 +1,12 @@
 import React, { useRef, useState } from "react";
-import "./styles.scss";
+import styles from "./styles.module.scss";
 
 export default function BrushSelector({ color, onChange, setSize, size }) {
   const [isOpen, setOpen] = useState(false);
   const root = useRef();
   const toggle = () => setOpen(state => !state);
   return (
-    <div ref={root} className="hasMenu">
+    <div ref={root} className={styles.wrapper}>
       <button onClick={toggle}>
         <span
           style={{
@@ -17,7 +17,7 @@ export default function BrushSelector({ color, onChange, setSize, size }) {
         />
       </button>
       {isOpen && (
-        <div className="menu">
+        <div className={styles.menu}>
           <div className="row">
             <button type="button" onClick={() => setSize(size => size + 1)}>
               +

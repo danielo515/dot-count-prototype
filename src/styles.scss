@@ -27,22 +27,6 @@ h2 {
   margin: 0;
 }
 
-.info {
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  right: 0;
-  margin: 0;
-  padding: 8px;
-  ul {
-    padding: 0;
-    margin: 0;
-    // temporary
-    display: none;
-  }
-}
-
-
 .controls {
   display: flex;
   flex-direction: row;
@@ -52,6 +36,7 @@ h2 {
   left: 0;
   padding: 0 8px;
   justify-content: center;
+  align-items: stretch;
   background-color: $dark-bg;
   z-index: 1;
   button, label {

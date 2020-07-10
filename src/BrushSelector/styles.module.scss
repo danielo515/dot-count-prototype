@@ -1,10 +1,10 @@
 .wrapper {
   position: relative;
+  display: flex;
   button {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 40px;
     span {
       border-radius: 100%;
     }
