@@ -42,7 +42,7 @@ jobs:
         run: |
           sudo chown -R $USER:$USER ./itemcounter
           find . -name '*.aab' -o -name '*.apk' -exec cp '{}' ./ \;
-          find . -name '*.aab' -o -name '*.apk' -exec echo '{}' \;
+          find . \( -name '*.aab' -o -name '*.apk' \) -exec echo '{}' +
           ls -l
       - name: Upload apk artifacts
         uses: actions/upload-artifact@v2
@@ -60,7 +60,8 @@ jobs:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: Here is the compiled app
-          document: ./$(ls *.apk)
+          debug: true
+          document: app-debug.apk
       # - name: Sign app
       #   uses: oxr463/setup-cordova@0.0.2
       #   with:
