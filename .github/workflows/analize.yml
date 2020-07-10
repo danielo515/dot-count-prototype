@@ -41,9 +41,9 @@ jobs:
       - name: Move built artifacts to root
         run: |
           sudo chown -R $USER:$USER ./itemcounter
-          find . -name '*.aab' -o -name '*.apk' -exec cp '{}' ./ \;
-          find . \( -name '*.aab' -o -name '*.apk' \) -exec echo '{}' +
+          find . \( -name '*.aab' -o -name '*.apk' \) -exec cp '{}' ./ +
           ls -l
+          echo "::set-env name=APK::(ls *.apk)"
       - name: Upload apk artifacts
         uses: actions/upload-artifact@v2
         with:
@@ -54,12 +54,14 @@ jobs:
         with:
           name: bundled
           path: ./*.aab
-      - name: send photo message
+      - name: Send generated debug apk
         uses: appleboy/telegram-action@master
+        env: 
+          APK: $APK
         with:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
-          message: Here is the compiled app
+          message: Here is the compiled app ${{ repo }} $APK
           debug: true
           document: app-debug.apk
       # - name: Sign app
