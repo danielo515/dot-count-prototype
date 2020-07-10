@@ -24,7 +24,8 @@
     "build": "react-scripts build && mkdir -p itemcounter/www && cp -rf build/* itemcounter/www/",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "inspectBundle": "node ./inspectBundle"
+    "inspectBundle": "node ./inspectBundle",
+    "new-component": "hygen component new --name"
   },
   "eslintConfig": {
     "extends": "react-app"
