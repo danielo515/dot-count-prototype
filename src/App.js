@@ -10,6 +10,7 @@ import { useImage } from "./useImage";
 import LoadImage from "./LoadImage";
 import BrushSelector from "./BrushSelector";
 import TopBar from "./TopBar";
+import Button from "./components/Button";
 
 const pointId = (p) => `${p.x},${p.y}`;
 // Creates a new array with the item at idx removed
@@ -68,22 +69,20 @@ export default function App() {
             setSize={setSize}
             color={color}
           />
-          <button type="button" onClick={scaleDown}>
+          <Button onClick={scaleDown}>
             <ZoomOutIcon />
-          </button>
-          <button type="button" disabled={scale === 1} onClick={resetZoom}>
+          </Button>
+          <Button disabled={scale === 1} onClick={resetZoom}>
             <ResetZoom />
-          </button>
-          <button type="button" onClick={scaleUp}>
+          </Button>
+          <Button onClick={scaleUp}>
             <ZoomInIcon />
-          </button>
+          </Button>
         </div>
-        <button type="button" disabled={points.length === 0} onClick={undo}>
+        <Button disabled={points.length === 0} onClick={undo}>
           <UndoIcon />
-        </button>
-        <button type="button" onClick={() => setPoints([])}>
-          clear
-        </button>
+        </Button>
+        <Button onClick={() => setPoints([])}>clear</Button>
       </div>
       <TopBar count={points.length} reset={resetImage} />
       <Stage ref={layerRef} draggable width={canvasWidth} height={canvasHeight}>
@@ -112,4 +111,3 @@ export default function App() {
     </div>
   );
 }
-

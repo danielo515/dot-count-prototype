@@ -6,3 +6,24 @@ $dark-bg: #333333;
 $disabled-bg: #68666650;
 $btn-color-disabled: #cecece41;
 $btn-padding: 16px;
+
+%btn {
+  border: none;
+  font: $text-button;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: inset 0 0 0 1px $btn-border;
+  padding: $btn-padding;
+  color: $btn-color;
+  background-color: $dark-bg;
+  text-transform: uppercase;
+  min-width: 40px;
+  &:disabled {
+    color: $btn-color-disabled;
+    background-color: $disabled-bg;
+  }
+  &:focus {
+    outline: unset;
+  }
+}
