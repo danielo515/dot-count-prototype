@@ -41,9 +41,9 @@ jobs:
       - name: Move built artifacts to root
         run: |
           sudo chown -R $USER:$USER ./itemcounter
-          find . -name '*.aab' -or -name '*.apk' -exec cp '{}' ./ \;
-          find . -name '*.aab' -or -name '*.apk' -exec echo '{}' \;
+          find . \( -name '*.aab' -o -name '*.apk' \) -exec cp '{}' ./ +
           ls -l
+          echo "::set-env name=APK::(ls *.apk)"
       - name: Upload apk artifacts
         uses: actions/upload-artifact@v2
         with:
@@ -53,14 +53,17 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: bundled
-          path: ./**/*.aab
-      - name: send photo message
+          path: ./*.aab
+      - name: Send generated debug apk
         uses: appleboy/telegram-action@master
+        env: 
+          APK: $APK
         with:
-          to: ${{ secrets.TELEGRAM_TO }
+          to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
-          message: Here is the compiled app
-          document: itemcounter/$(ls *.apk)
+          message: Here is the compiled app ${{ repo }} $APK
+          debug: true
+          document: app-debug.apk
       # - name: Sign app
       #   uses: oxr463/setup-cordova@0.0.2
       #   with:
@@ -76,9 +79,3 @@ jobs:
       #     signingKeyBase64: ${{ secrets.ANDROID_SIGN_KEY }}
       #     alias: ${{ secrets.ALIAS }}
       #     keyStorePassword: ${{ secrets. KEY_PASS }}
-      # - name: Upload artifacts
-      #   uses: actions/upload-artifact@v2
-      #   with:
-      #     name: dotcounter
-      #     # Be careful, the name of the sign app task matters!
-      #     path: ${{ steps.sign-app.outputs.signedReleaseFile }}
