@@ -60,7 +60,7 @@ jobs:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: Here is the compiled app
-          document: itemcounter/$(ls *.apk)
+          document: ./$(ls *.apk)
       # - name: Sign app
       #   uses: oxr463/setup-cordova@0.0.2
       #   with:
