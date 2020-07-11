@@ -5,4 +5,4 @@ after: "export { default"
 skip_if: <%= Name %> 
 sh: "yarn eslint --fix <%= cwd %>/src"
 ---
-export { default as <%= Name %> } from './components/<%= Name %>'
+export { default as <%= Name %> } from './<%= Name %>'
