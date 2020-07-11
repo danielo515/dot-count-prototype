@@ -22,6 +22,8 @@ function getRelativePointerPosition(node) {
   // now we can find relative point
   return transform.point(pos);
 }
+// Too bad this is not calculated, but at leas on css it is
+const ButtonSize = 56;
 
 export default function App() {
   const layerRef = useRef(null);
@@ -39,7 +41,7 @@ export default function App() {
   const undo = () => setPoints(points.slice(0, -1));
   const [canvasWidth, canvasHeight] = [
     window.innerWidth,
-    window.innerHeight - 16,
+    window.innerHeight - 16 - ButtonSize,
   ];
   const { imageInfo, onFileSelected, image, resetImage } = useImage({
     width: canvasWidth,

@@ -12,6 +12,9 @@ body {
   padding: 0;
   background-color: $main-background;
 }
+.konvajs-content {
+  margin-top: $btn-min-size;
+}
 
 #root,
 body {
