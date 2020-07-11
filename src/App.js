@@ -2,15 +2,10 @@ import React, { useRef, useState } from "react";
 import "./styles.scss";
 import "normalize.css";
 import { Stage, Layer, Circle, Image } from "react-konva";
-import ResetZoom from "@material-ui/icons/YoutubeSearchedFor";
-import ZoomInIcon from "@material-ui/icons/ZoomIn";
-import ZoomOutIcon from "@material-ui/icons/ZoomOut";
-import UndoIcon from "@material-ui/icons/Undo";
 import { useImage } from "./useImage";
 import LoadImage from "./LoadImage";
-import BrushSelector from "./BrushSelector";
 import TopBar from "./TopBar";
-import Button from "./components/Button";
+import { ControlBar } from "./components";
 
 const pointId = (p) => `${p.x},${p.y}`;
 // Creates a new array with the item at idx removed
@@ -55,6 +50,8 @@ export default function App() {
     setPoints([]);
   };
 
+  const clearPoints = () => setPoints([]);
+
   const addPoint = (e) => {
     const pos = getRelativePointerPosition(e.currentTarget);
     setPoints((state) => [...state, { x: pos.x, y: pos.y }]);
@@ -64,29 +61,18 @@ export default function App() {
   }
   return (
     <div className="App">
-      <div className="controls">
-        <div className="row">
-          <BrushSelector
-            size={size}
-            onChange={setColor}
-            setSize={setSize}
-            color={color}
-          />
-          <Button onClick={scaleDown}>
-            <ZoomOutIcon />
-          </Button>
-          <Button disabled={scale === 1} onClick={resetZoom}>
-            <ResetZoom />
-          </Button>
-          <Button onClick={scaleUp}>
-            <ZoomInIcon />
-          </Button>
-        </div>
-        <Button disabled={points.length === 0} onClick={undo}>
-          <UndoIcon />
-        </Button>
-        <Button onClick={() => setPoints([])}>clear</Button>
-      </div>
+      <ControlBar
+        brushColor={color}
+        brushSize={size}
+        setBrushColor={setColor}
+        setBrushSize={setSize}
+        scaleUp={scaleUp}
+        scaleDown={scaleDown}
+        resetZoom={resetZoom}
+        clear={clearPoints}
+        points={points}
+        undo={undo}
+      />
       <TopBar count={points.length} reset={reset} />
       <Stage ref={layerRef} draggable width={canvasWidth} height={canvasHeight}>
         <Layer scaleX={scale} scaleY={scale}>
