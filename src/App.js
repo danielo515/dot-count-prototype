@@ -50,7 +50,10 @@ export default function App() {
     height: canvasHeight,
   });
 
-  console.log({ imageInfo, canvasWidth, canvasHeight });
+  const reset = () => {
+    resetImage();
+    setPoints([]);
+  };
 
   const addPoint = (e) => {
     const pos = getRelativePointerPosition(e.currentTarget);
@@ -84,7 +87,7 @@ export default function App() {
         </Button>
         <Button onClick={() => setPoints([])}>clear</Button>
       </div>
-      <TopBar count={points.length} reset={resetImage} />
+      <TopBar count={points.length} reset={reset} />
       <Stage ref={layerRef} draggable width={canvasWidth} height={canvasHeight}>
         <Layer scaleX={scale} scaleY={scale}>
           {imageInfo.loaded && (

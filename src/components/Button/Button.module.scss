@@ -1,5 +1,6 @@
 @import "../../common.scss";
 .wrapper {
+  display: flex;
   button {
     border: none;
     font: $text-button;
