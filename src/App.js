@@ -29,6 +29,7 @@ export default function App() {
   const [size, setSize] = useState(2);
   const [color, setColor] = useState("#a7e326");
   const [scale, setScale] = useState(1);
+  const [brushStyle, setBrushStyle] = useState("circle");
   const scaleUp = () => setScale((scale) => scale + 0.1);
   const scaleDown = () => setScale((scale) => scale - 0.1);
   const resetZoom = () => {
@@ -62,6 +63,8 @@ export default function App() {
   return (
     <div className="App">
       <ControlBar
+        brushStyle={brushStyle}
+        setBrushStyle={setBrushStyle}
         brushColor={color}
         brushSize={size}
         setBrushColor={setColor}
@@ -90,8 +93,12 @@ export default function App() {
               key={pointId(p)}
               x={p.x}
               y={p.y}
-              fill={color}
-              radius={size}
+              {...(brushStyle === "circle"
+                ? {
+                    stroke: color,
+                    radius: size * 2,
+                  }
+                : { fill: color, radius: size })}
               onClick={() => setPoints((points) => removePos(idx, points))}
             />
           ))}

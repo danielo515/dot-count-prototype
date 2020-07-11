@@ -7,6 +7,7 @@ import React from "react";
 import BrushSelector from "../../BrushSelector";
 import Button from "../Button";
 import styles from "./ControlBar.module.scss";
+import { BrushStyle } from "../../BrushSelector/BrushSelector";
 
 type Props = {
   /**
@@ -26,6 +27,8 @@ type Props = {
   clear: () => void;
   scale: number;
   brushSize: number;
+  brushStyle: BrushStyle;
+  setBrushStyle: (style: BrushStyle) => void;
 };
 
 function ControlBar({
@@ -40,6 +43,8 @@ function ControlBar({
   scale,
   points,
   undo,
+  brushStyle,
+  setBrushStyle,
   clear,
 }: Props) {
   const classes = [styles.wrapper, className].join(" ").trim();
@@ -47,6 +52,8 @@ function ControlBar({
     <div className={classes}>
       <BrushSelector
         size={brushSize}
+        brushStyle={brushStyle}
+        setBrushStyle={setBrushStyle}
         onChange={setBrushColor}
         setSize={setBrushSize}
         color={brushColor}
