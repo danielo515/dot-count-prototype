@@ -1,11 +1,13 @@
 $btn-border: #3d3d3d;
 $btn-background: #a0fadc;
 $btn-color: #eaefff;
-$text-button: 500 16px/24px Inter;
+$btn-line-height: 24px;
+$text-button: 500 16px / #{$btn-line-height} Inter;
 $dark-bg: #333333;
 $disabled-bg: #68666650;
 $btn-color-disabled: #cecece41;
 $btn-padding: 16px;
+$btn-min-size: ($btn-padding * 2) + $btn-line-height;
 
 $padding1: 8px;
 $padding2: 16px;

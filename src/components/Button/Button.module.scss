@@ -12,7 +12,7 @@
     color: $btn-color;
     background-color: $dark-bg;
     text-transform: uppercase;
-    min-width: 40px;
+    min-width: $btn-min-size;
     &:disabled {
       color: $btn-color-disabled;
       background-color: $disabled-bg;
