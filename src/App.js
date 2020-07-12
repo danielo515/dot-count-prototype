@@ -40,7 +40,7 @@ export default function App() {
   const undo = () => setPoints(points.slice(0, -1));
   const [canvasWidth, canvasHeight] = [
     window.innerWidth,
-    window.innerHeight - 16 - ButtonSize,
+    window.innerHeight - ButtonSize * 2,
   ];
   const { imageInfo, onFileSelected, image, resetImage } = useImage({
     width: canvasWidth,
