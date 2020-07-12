@@ -6,6 +6,7 @@ import { useImage } from "./useImage";
 import LoadImage from "./LoadImage";
 import TopBar from "./TopBar";
 import { ControlBar } from "./components";
+import useBrush from "./hooks/useBrush";
 
 const pointId = (p) => `${p.x},${p.y}`;
 // Creates a new array with the item at idx removed
@@ -26,12 +27,10 @@ function getRelativePointerPosition(node) {
 const ButtonSize = 56;
 
 export default function App() {
+  const { brush } = useBrush();
   const layerRef = useRef(null);
   const [points, setPoints] = useState([]);
-  const [size, setSize] = useState(2);
-  const [color, setColor] = useState("#a7e326");
   const [scale, setScale] = useState(1);
-  const [brushStyle, setBrushStyle] = useState("circle");
   const scaleUp = () => setScale((scale) => scale + 0.1);
   const scaleDown = () => setScale((scale) => scale - 0.1);
   const resetZoom = () => {
@@ -65,12 +64,6 @@ export default function App() {
   return (
     <div className="App">
       <ControlBar
-        brushStyle={brushStyle}
-        setBrushStyle={setBrushStyle}
-        brushColor={color}
-        brushSize={size}
-        setBrushColor={setColor}
-        setBrushSize={setSize}
         scaleUp={scaleUp}
         scaleDown={scaleDown}
         resetZoom={resetZoom}
@@ -95,12 +88,12 @@ export default function App() {
               key={pointId(p)}
               x={p.x}
               y={p.y}
-              {...(brushStyle === "circle"
+              {...(brush.style === "circle"
                 ? {
-                    stroke: color,
-                    radius: size * 2,
+                    stroke: brush.color,
+                    radius: brush.size * 2,
                   }
-                : { fill: color, radius: size })}
+                : { fill: brush.color, radius: brush.size })}
               onClick={() => setPoints((points) => removePos(idx, points))}
             />
           ))}
