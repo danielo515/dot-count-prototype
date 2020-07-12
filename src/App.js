@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import "./styles.scss";
+import "./App.scss";
 import "normalize.css";
 import { Stage, Layer, Circle, Image } from "react-konva";
 import { useImage } from "./useImage";

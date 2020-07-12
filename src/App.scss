@@ -17,8 +17,9 @@ body {
 }
 
 #root,
-body {
-  height: 100vh;
+body,
+html {
+  height: 100%;
   width: 100%;
 }
 
