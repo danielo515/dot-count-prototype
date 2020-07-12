@@ -42,6 +42,7 @@ export default function App() {
     window.innerWidth,
     window.innerHeight - ButtonSize * 2,
   ];
+  const [centerX, centerY] = [canvasWidth / 2, canvasHeight / 2]
   const { imageInfo, onFileSelected, image, resetImage } = useImage({
     width: canvasWidth,
     height: canvasHeight,
@@ -74,7 +75,11 @@ export default function App() {
       />
       <TopBar count={points.length} reset={reset} />
       <Stage ref={layerRef} draggable width={canvasWidth} height={canvasHeight}>
-        <Layer scaleX={scale} scaleY={scale}>
+        <Layer
+          scaleX={scale}
+          scaleY={scale}
+          y={centerY - imageInfo.targetHeight / 2}
+          x={centerX - imageInfo.targetWidth / 2}>
           {imageInfo.loaded && (
             <Image
               image={image}
