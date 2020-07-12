@@ -1,5 +1,6 @@
 import React, { createContext, useReducer } from "react";
 import { BrushStyle } from "../BrushSelector/BrushSelector";
+import { handlers } from "./handlers";
 
 type BrushActions = {
   [T in keyof typeof handlers]: {
@@ -10,7 +11,7 @@ type BrushActions = {
 
 type BrushAction = BrushActions[keyof BrushActions];
 
-type State = {
+export type State = {
   size: number;
   color: string;
   style: BrushStyle;
@@ -31,21 +32,6 @@ export const BrushContext = createContext<Context>({
   state: initialState,
   dispatch() {},
 });
-
-const handlers = {
-  incBrush(state: State, { by = 1 }: { by: number }) {
-    return { ...state, size: state.size + by };
-  },
-  decBrush(state: State, { by = 1 }: { by: number }) {
-    return { ...state, size: state.size - by };
-  },
-  setColor(state: State, { color }: { color: string }) {
-    return { ...state, color };
-  },
-  setStyle(state: State, { style }: { style: BrushStyle }) {
-    return { ...state, style };
-  },
-};
 
 function reducer(state: State, action: BrushAction): State {
   if (handlers.hasOwnProperty(action.type)) {
