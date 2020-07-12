@@ -8,7 +8,7 @@ import TopBar from "./TopBar";
 import { ControlBar } from "./components";
 import useBrush from "./hooks/useBrush";
 
-const pointId = (p) => `${p.x},${p.y}`;
+const pointId = (p) => `${ p.x },${ p.y }`;
 // Creates a new array with the item at idx removed
 const removePos = (idx, arr) => [...arr.slice(0, idx), ...arr.slice(idx + 1)];
 // this function will return pointer position relative to the passed node
@@ -70,6 +70,7 @@ export default function App() {
         clear={clearPoints}
         points={points}
         undo={undo}
+        scale={scale}
       />
       <TopBar count={points.length} reset={reset} />
       <Stage ref={layerRef} draggable width={canvasWidth} height={canvasHeight}>
@@ -90,9 +91,9 @@ export default function App() {
               y={p.y}
               {...(brush.style === "circle"
                 ? {
-                    stroke: brush.color,
-                    radius: brush.size * 2,
-                  }
+                  stroke: brush.color,
+                  radius: brush.size * 2,
+                }
                 : { fill: brush.color, radius: brush.size })}
               onClick={() => setPoints((points) => removePos(idx, points))}
             />
