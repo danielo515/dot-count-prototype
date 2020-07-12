@@ -31,7 +31,13 @@ export default function App() {
   const layerRef = useRef(null);
   const [points, setPoints] = useState([]);
   const [scale, setScale] = useState(1);
-  const scaleUp = () => setScale((scale) => scale + 0.1);
+  const scaleUp = () => {
+    setScale((scale) => scale + 0.1);
+    layerRef.current.position({
+      y: layerRef.current.y() - 10,
+      x: layerRef.current.x() - 10
+    })
+  }
   const scaleDown = () => setScale((scale) => scale - 0.1);
   const resetZoom = () => {
     layerRef.current.position({ x: 0, y: 0 });
