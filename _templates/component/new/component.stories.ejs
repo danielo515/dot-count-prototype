@@ -1,0 +1,35 @@
+---
+to: src/components/<%= Name %>/<%= Name %>.stories.js
+---
+//@flow
+import React from 'react'
+import { action } from '@storybook/addon-actions'
+import { withKnobs, text, boolean, number } from '@storybook/addon-knobs'
+
+import <%= Name %> from './<%= Name %>'
+
+export default {
+  title: '<%= Name %>',
+  component: <%= Name %>,
+  decorators: [withKnobs],
+  parameters: {
+    options: { showPanel: true },
+  },
+};
+
+/**
+* Use the default export to provide interactivity using knobs.
+* It will give a better overview of what the component is capable.
+*/
+export const Default = () => { 
+  const name = text('Name', 'James')
+  const items = number('Items', 4)
+  const render = boolean('Render?', true)
+  return (
+    <<%= Name %> onClick={action('clicked')} name={name}>
+      { render && Array(items).fill(name).join(' ') }
+    </<%= Name %>>
+    )
+};
+
+export const ExampleOne = () => <<%= Name %> onClick={action('clicked')}>Hello Component</<%= Name %>>;

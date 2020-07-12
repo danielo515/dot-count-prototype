@@ -1,0 +1,24 @@
+@import "../../common.scss";
+.wrapper {
+  display: flex;
+  button {
+    border: none;
+    font: $text-button;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: inset 0 0 0 1px $btn-border;
+    padding: $btn-padding;
+    color: $btn-color;
+    background-color: $dark-bg;
+    text-transform: uppercase;
+    min-width: $btn-min-size;
+    &:disabled {
+      color: $btn-color-disabled;
+      background-color: $disabled-bg;
+    }
+    &:focus {
+      outline: unset;
+    }
+  }
+}

@@ -4,7 +4,7 @@ export function useImage({ height, width }) {
   const [imageInfo, setImageInfo] = useState({ loaded: false });
   const [image, setImage] = useState();
   function loadImage(src) {
-    var img = new Image();
+    const img = new Image();
     img.onload = function imageLoaded() {
       const ratio = img.width / img.height;
       const targetHeight = Math.min(height, width / ratio);
@@ -17,7 +17,7 @@ export function useImage({ height, width }) {
         targetWidth,
         centerX: targetWidth / 2,
         centerY: targetHeight / 2,
-        loaded: true
+        loaded: true,
       });
       setImage(img);
     };
@@ -27,12 +27,18 @@ export function useImage({ height, width }) {
     var selectedFile = event.target.files[0];
     var reader = new FileReader();
 
-    reader.onload = function(event) {
+    reader.onload = function (event) {
       loadImage(event.target.result);
     };
 
     reader.readAsDataURL(selectedFile);
   }
 
-  return { onFileSelected, imageInfo, image };
+  function resetImage() {
+    setImageInfo({ loaded: false });
+    setImage(null);
+  }
+
+  return { onFileSelected, imageInfo, image, resetImage };
 }
+

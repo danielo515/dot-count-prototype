@@ -1,0 +1,37 @@
+---
+to: src/components/<%= Name %>/<%= Name %>.tsx
+---
+//@flow
+import React from 'react'
+import styles from './<%= Name %>.module.scss'
+
+type Props = {
+  /**
+   * If further customization is needed provide a custom class name,
+   * it will be applied to the root of the component as the last class, 
+   * giving it the greatest precedence
+   */
+  className?: string,
+  children: JSX.Element,
+  disabled: boolean,
+}
+
+function <%= Name %>({ className, children, disabled }: Props) {
+    const classes = [styles.wrapper, disabled? styles.disabled : '', className].join(' ').trim()
+    return (
+        <div className={classes}>
+            <% if (locals.usePoliglot) { -%>
+                {__('name.placeholder')}
+            <% } -%>
+            {children}
+        </div>
+    )
+}
+
+<%= Name %>.defaultProps = {
+    className: '',
+    color: 'primary',
+    disabled: false,
+}
+
+export default <%= Name  %>

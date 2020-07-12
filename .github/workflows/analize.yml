@@ -5,13 +5,12 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     strategy:
@@ -19,11 +18,61 @@ jobs:
         node-version: [12.x]
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
-    - run: npm ci
-    - run: npm run build --if-present
-    - run: npm run inspectBundle
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Build web app
+        run: yarn && yarn build
+      - name: Extract certificate
+        env:
+          AUTH: ${{ secrets.ANDROID_SIGN_KEY }}
+        run: echo "$AUTH" | base64 --decode > ANDROID_SIGN_KEY && pwd && ls -l
+      - name: Build android app
+        uses: oxr463/setup-cordova@0.0.2
+        with:
+          exec: |
+            cd itemcounter && \
+            cordova platform add android && \
+            cordova build android --no-telemetry && \
+            cordova build android --no-telemetry --release -- --packageType=bundle --keystore="../ANDROID_SIGN_KEY" --storePassword=${{ secrets.KEY_PASS }} --alias=${{ secrets.ALIAS }} --password=${{  secrets.KEY_PASS }}
+          # (cd ./platforms/android && ./gradlew app:bundleRelease)
+      - name: Move built artifacts to root
+        run: |
+          sudo chown -R $USER:$USER ./itemcounter
+          find . \( -name '*.aab' -o -name '*.apk' \) -exec cp '{}' ./ \;
+          ls -l
+          echo "::set-env name=APK::$(ls *.apk)"
+      - name: Upload apk artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: apks
+          path: ./*.apk
+      - name: Upload aab artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: bundled
+          path: ./*.aab
+      - name: Send generated debug apk
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: Here is the compiled app ${{ github.repository }} ${{ env.APK }}
+          document: app-debug.apk
+      # - name: Sign app
+      #   uses: oxr463/setup-cordova@0.0.2
+      #   with:
+      #     exec: |
+      #       jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 \
+      #       -keystore ./ANDROID_SIGN_KEY \
+      #       "./$(ls *.apk)" ANDROID_KEY \
+      #       --storepass $KEY_PASS
+      # - name: Sign app
+      #   uses: r0adkll/sign-android-release@v1
+      #   with:
+      #     releaseDirectory: ./itemcounter
+      #     signingKeyBase64: ${{ secrets.ANDROID_SIGN_KEY }}
+      #     alias: ${{ secrets.ALIAS }}
+      #     keyStorePassword: ${{ secrets. KEY_PASS }}

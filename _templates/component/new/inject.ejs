@@ -1,0 +1,8 @@
+---
+inject: true
+to: src/components/index.js
+after: "export { default"
+skip_if: <%= Name %> 
+sh: "yarn eslint --fix <%= cwd %>/src"
+---
+export { default as <%= Name %> } from './<%= Name %>'

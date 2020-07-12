@@ -1,0 +1,15 @@
+@import "../common.scss";
+.wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: $dark-bg;
+  color: $btn-color;
+  font: 500 24px/24px Inter;
+  width: 100%;
+  z-index: 1;
+  padding: 0 16px 0 0;
+}
