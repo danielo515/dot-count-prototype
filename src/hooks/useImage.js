@@ -1,7 +1,10 @@
 import { useState } from "react";
 
 export function useImage({ height, width }) {
-  const [imageInfo, setImageInfo] = useState({ loaded: false });
+  const [imageInfo, setImageInfo] = useState({
+    loaded: false,
+    isLoading: false,
+  });
   const [image, setImage] = useState();
   function loadImage(src) {
     const img = new Image();
@@ -18,6 +21,7 @@ export function useImage({ height, width }) {
         centerX: targetWidth / 2,
         centerY: targetHeight / 2,
         loaded: true,
+        isLoading: false,
       });
       setImage(img);
     };
@@ -28,6 +32,7 @@ export function useImage({ height, width }) {
     var reader = new FileReader();
 
     reader.onload = function (event) {
+      setImageInfo({ isLoading: true, loaded: false });
       loadImage(event.target.result);
     };
 
@@ -41,4 +46,3 @@ export function useImage({ height, width }) {
 
   return { onFileSelected, imageInfo, image, resetImage };
 }
-

@@ -2,13 +2,13 @@ import React, { useRef, useState } from "react";
 import "./App.scss";
 import "normalize.css";
 import { Stage, Layer, Circle, Image } from "react-konva";
-import { useImage } from "./useImage";
+import { useImage } from "./hooks/useImage";
 import LoadImage from "./LoadImage";
 import TopBar from "./TopBar";
-import { ControlBar } from "./components";
+import { ControlBar, Loading } from "./components";
 import useBrush from "./hooks/useBrush";
 
-const pointId = (p) => `${ p.x },${ p.y }`;
+const pointId = (p) => `${p.x},${p.y}`;
 // Creates a new array with the item at idx removed
 const removePos = (idx, arr) => [...arr.slice(0, idx), ...arr.slice(idx + 1)];
 // this function will return pointer position relative to the passed node
@@ -35,9 +35,9 @@ export default function App() {
     setScale((scale) => scale + 0.1);
     layerRef.current.position({
       y: layerRef.current.y() - 10,
-      x: layerRef.current.x() - 10
-    })
-  }
+      x: layerRef.current.x() - 10,
+    });
+  };
   const scaleDown = () => setScale((scale) => scale - 0.1);
   const resetZoom = () => {
     layerRef.current.position({ x: 0, y: 0 });
@@ -48,7 +48,7 @@ export default function App() {
     window.innerWidth,
     window.innerHeight - ButtonSize * 2,
   ];
-  const [centerX, centerY] = [canvasWidth / 2, canvasHeight / 2]
+  const [centerX, centerY] = [canvasWidth / 2, canvasHeight / 2];
   const { imageInfo, onFileSelected, image, resetImage } = useImage({
     width: canvasWidth,
     height: canvasHeight,
@@ -66,7 +66,12 @@ export default function App() {
     setPoints((state) => [...state, { x: pos.x, y: pos.y }]);
   };
   if (imageInfo.loaded === false) {
-    return <LoadImage onFileSelected={onFileSelected} />;
+    return (
+      <>
+        <LoadImage onFileSelected={onFileSelected} />
+        <Loading isLoading={imageInfo.isLoading} />
+      </>
+    );
   }
   return (
     <div className="App">
@@ -85,7 +90,8 @@ export default function App() {
           scaleX={scale}
           scaleY={scale}
           y={centerY - imageInfo.targetHeight / 2}
-          x={centerX - imageInfo.targetWidth / 2}>
+          x={centerX - imageInfo.targetWidth / 2}
+        >
           {imageInfo.loaded && (
             <Image
               image={image}
@@ -102,9 +108,9 @@ export default function App() {
               y={p.y}
               {...(brush.style === "circle"
                 ? {
-                  stroke: brush.color,
-                  radius: brush.size * 2,
-                }
+                    stroke: brush.color,
+                    radius: brush.size * 2,
+                  }
                 : { fill: brush.color, radius: brush.size })}
               onClick={() => setPoints((points) => removePos(idx, points))}
             />
