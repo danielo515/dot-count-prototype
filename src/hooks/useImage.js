@@ -28,11 +28,11 @@ export function useImage({ height, width }) {
     img.src = src;
   }
   function onFileSelected(event) {
+    setImageInfo({ isLoading: true, loaded: false });
     var selectedFile = event.target.files[0];
     var reader = new FileReader();
 
     reader.onload = function (event) {
-      setImageInfo({ isLoading: true, loaded: false });
       loadImage(event.target.result);
     };
 
