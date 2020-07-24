@@ -17,7 +17,7 @@ async function main() {
   cordovaPkg.version = version;
   await writeFile(configPath, updatedContent, "utf8");
   console.log("wrote", version, "to", configPath);
-  await writeFile(cordovaPath, JSON.stringify(cordovaPkg), "utf8");
+  await writeFile(cordovaPath, JSON.stringify(cordovaPkg, null, 2), "utf8");
   console.log("wrote", version, "to", cordovaPath);
 }
 

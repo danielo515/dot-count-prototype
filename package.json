@@ -31,7 +31,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "node scripts/copyVersion.js"
+      "pre-commit": "node scripts/copyVersion.js && git add ."
     }
   },
   "eslintConfig": {
