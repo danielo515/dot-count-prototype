@@ -1,6 +1,6 @@
 {
   "name": "image-count-dots",
-  "version": "1.1.2",
+  "version": "1.1.4",
   "description": "Count items on images",
   "keywords": [],
   "main": "src/index.js",
@@ -17,6 +17,7 @@
     "webpack-bundle-analyzer": "3.8.0"
   },
   "devDependencies": {
+    "husky": "^4.2.5",
     "hygen": "^6.0.4",
     "typescript": "3.8.3"
   },
@@ -25,6 +26,7 @@
     "build": "react-scripts build && mkdir -p itemcounter/www && cp -rf build/* itemcounter/www/",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
+    "pre-commit": "node scripts/copyVersion.js",
     "inspectBundle": "node ./inspectBundle",
     "new-component": "hygen component new --name"
   },
