@@ -26,9 +26,13 @@
     "build": "react-scripts build && mkdir -p itemcounter/www && cp -rf build/* itemcounter/www/",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "pre-commit": "node scripts/copyVersion.js",
     "inspectBundle": "node ./inspectBundle",
     "new-component": "hygen component new --name"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "node scripts/copyVersion.js"
+    }
   },
   "eslintConfig": {
     "extends": "react-app"
