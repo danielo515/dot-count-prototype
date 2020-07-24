@@ -1,11 +1,12 @@
 import React, { useRef, useState } from "react";
-import "./styles.scss";
+import "./App.scss";
 import "normalize.css";
 import { Stage, Layer, Circle, Image } from "react-konva";
-import { useImage } from "./useImage";
+import { useImage } from "./hooks/useImage";
 import LoadImage from "./LoadImage";
 import TopBar from "./TopBar";
-import { ControlBar } from "./components";
+import { ControlBar, Loading } from "./components";
+import useBrush from "./hooks/useBrush";
 
 const pointId = (p) => `${p.x},${p.y}`;
 // Creates a new array with the item at idx removed
@@ -26,13 +27,17 @@ function getRelativePointerPosition(node) {
 const ButtonSize = 56;
 
 export default function App() {
+  const { brush } = useBrush();
   const layerRef = useRef(null);
   const [points, setPoints] = useState([]);
-  const [size, setSize] = useState(2);
-  const [color, setColor] = useState("#a7e326");
   const [scale, setScale] = useState(1);
-  const [brushStyle, setBrushStyle] = useState("circle");
-  const scaleUp = () => setScale((scale) => scale + 0.1);
+  const scaleUp = () => {
+    setScale((scale) => scale + 0.1);
+    layerRef.current.position({
+      y: layerRef.current.y() - 10,
+      x: layerRef.current.x() - 10,
+    });
+  };
   const scaleDown = () => setScale((scale) => scale - 0.1);
   const resetZoom = () => {
     layerRef.current.position({ x: 0, y: 0 });
@@ -41,8 +46,9 @@ export default function App() {
   const undo = () => setPoints(points.slice(0, -1));
   const [canvasWidth, canvasHeight] = [
     window.innerWidth,
-    window.innerHeight - 16 - ButtonSize,
+    window.innerHeight - ButtonSize * 2,
   ];
+  const [centerX, centerY] = [canvasWidth / 2, canvasHeight / 2];
   const { imageInfo, onFileSelected, image, resetImage } = useImage({
     width: canvasWidth,
     height: canvasHeight,
@@ -60,27 +66,32 @@ export default function App() {
     setPoints((state) => [...state, { x: pos.x, y: pos.y }]);
   };
   if (imageInfo.loaded === false) {
-    return <LoadImage onFileSelected={onFileSelected} />;
+    return (
+      <>
+        <LoadImage onFileSelected={onFileSelected} />
+        <Loading isLoading={imageInfo.isLoading} />
+      </>
+    );
   }
   return (
     <div className="App">
       <ControlBar
-        brushStyle={brushStyle}
-        setBrushStyle={setBrushStyle}
-        brushColor={color}
-        brushSize={size}
-        setBrushColor={setColor}
-        setBrushSize={setSize}
         scaleUp={scaleUp}
         scaleDown={scaleDown}
         resetZoom={resetZoom}
         clear={clearPoints}
         points={points}
         undo={undo}
+        scale={scale}
       />
       <TopBar count={points.length} reset={reset} />
       <Stage ref={layerRef} draggable width={canvasWidth} height={canvasHeight}>
-        <Layer scaleX={scale} scaleY={scale}>
+        <Layer
+          scaleX={scale}
+          scaleY={scale}
+          y={centerY - imageInfo.targetHeight / 2}
+          x={centerX - imageInfo.targetWidth / 2}
+        >
           {imageInfo.loaded && (
             <Image
               image={image}
@@ -95,12 +106,12 @@ export default function App() {
               key={pointId(p)}
               x={p.x}
               y={p.y}
-              {...(brushStyle === "circle"
+              {...(brush.style === "circle"
                 ? {
-                    stroke: color,
-                    radius: size * 2,
+                    stroke: brush.color,
+                    radius: brush.size * 2,
                   }
-                : { fill: color, radius: size })}
+                : { fill: brush.color, radius: brush.size })}
               onClick={() => setPoints((points) => removePos(idx, points))}
             />
           ))}

@@ -33,31 +33,18 @@ type Props = {
 
 function ControlBar({
   className,
-  setBrushColor,
-  setBrushSize,
-  brushSize,
-  brushColor,
   scaleDown,
   resetZoom,
   scaleUp,
   scale,
   points,
   undo,
-  brushStyle,
-  setBrushStyle,
   clear,
 }: Props) {
   const classes = [styles.wrapper, className].join(" ").trim();
   return (
     <div className={classes}>
-      <BrushSelector
-        size={brushSize}
-        brushStyle={brushStyle}
-        setBrushStyle={setBrushStyle}
-        onChange={setBrushColor}
-        setSize={setBrushSize}
-        color={brushColor}
-      />
+      <BrushSelector />
       <Button onClick={scaleDown}>
         <ZoomOutIcon />
       </Button>
